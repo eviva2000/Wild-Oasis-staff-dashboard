@@ -1,17 +1,15 @@
 
 import supabase from "./supabase"
 
-export async function getCabins(){
+export async function getCabins() {
+  const { data, error } = await supabase
+    .from('cabins')
+    .select('*')
 
-let { data, error } = await supabase
-.from('cabins')
-.select('*')
-
-if(error){
+  if (error) {
     console.error(error)
-    throw new Error('Cabin not found')
-}
-
-return data
-
+    throw new Error('Cabins could not be loaded')
+  }
+console.log(data)
+  return data
 }

@@ -1,15 +1,16 @@
-import styled from 'styled-components';
-import { HiPencil, HiTrash, HiSquare2Stack } from 'react-icons/hi2';
+import styled from "styled-components";
+import PropTypes from "prop-types";
+import { HiPencil, HiTrash, HiSquare2Stack } from "react-icons/hi2";
 
-import Menus from 'ui/Menus';
-import Modal from 'ui/Modal';
-import ConfirmDelete from 'ui/ConfirmDelete';
-import Table from 'ui/Table';
+// import {Menu} from "../../ui/Menus";
+// import Modal from "../../ui/Modal";
+// import ConfirmDelete from "ui/ConfirmDelete";
+import {StyledRow as Row} from "../../ui/Table";
 
-import { formatCurrency } from 'utils/helpers';
-import { useDeleteCabin } from './useDeleteCabin';
-import { useCreateCabin } from './useCreateCabin';
-import CreateCabinForm from './CreateCabinForm';
+import { formatCurrency } from "../../utils/helpers";
+// import { useDeleteCabin } from "./useDeleteCabin";
+// import { useCreateCabin } from "./useCreateCabin";
+// import CreateCabinForm from "./CreateCabinForm";
 
 // v1
 // const TableRow = styled.div`
@@ -38,16 +39,16 @@ const Cabin = styled.div`
   font-size: 1.6rem;
   font-weight: 600;
   color: var(--color-grey-600);
-  font-family: 'Sono';
+  font-family: "Sono";
 `;
 
 const Price = styled.div`
-  font-family: 'Sono';
+  font-family: "Sono";
   font-weight: 600;
 `;
 
 const Discount = styled.div`
-  font-family: 'Sono';
+  font-family: "Sono";
   font-weight: 500;
   color: var(--color-green-700);
 `;
@@ -63,22 +64,22 @@ function CabinRow({ cabin }) {
     description,
   } = cabin;
 
-  const { mutate: deleteCabin, isLoading: isDeleting } = useDeleteCabin();
-  const { mutate: createCabin } = useCreateCabin();
+  // const { mutate: deleteCabin, isLoading: isDeleting } = useDeleteCabin();
+  // const { mutate: createCabin } = useCreateCabin();
 
-  function handleDuplicate() {
-    createCabin({
-      name: `${name} duplicate`,
-      maxCapacity,
-      regularPrice,
-      discount,
-      image,
-      description,
-    });
-  }
+  // function handleDuplicate() {
+  //   createCabin({
+  //     name: `${name} duplicate`,
+  //     maxCapacity,
+  //     regularPrice,
+  //     discount,
+  //     image,
+  //     description,
+  //   });
+  // }
 
   return (
-    <Table.Row role='row'>
+    <Row role="row">
       <Img src={image} alt={`Cabin ${name}`} />
 
       <Cabin>{name}</Cabin>
@@ -93,39 +94,39 @@ function CabinRow({ cabin }) {
         <span>&mdash;</span>
       )}
 
-      <Modal>
-        <Menus.Menu>
+      {/* <Modal> */}
+        {/* <Menus.Menu>
           <Menus.Toggle id={cabinId} />
 
           <Menus.List id={cabinId}>
-            <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
+            <Menus.Button icon={<HiSquare2Stack />} >
               Duplicate
             </Menus.Button>
 
-            <Modal.Toggle opens='edit'>
+            <Modal.Toggle opens="edit">
               <Menus.Button icon={<HiPencil />}>Edit cabin</Menus.Button>
             </Modal.Toggle>
 
             {/* Now it gets a bit confusing... */}
-            <Modal.Toggle opens='delete'>
+            {/* <Modal.Toggle opens="delete">
               <Menus.Button icon={<HiTrash />}>Delete cabin</Menus.Button>
             </Modal.Toggle>
           </Menus.List>
-        </Menus.Menu>
+        </Menus.Menu>  */}
 
         {/* This needs to be OUTSIDE of the menu, which in no problem. The compound component gives us this flexibility */}
-        <Modal.Window name='edit'>
+        {/* <Modal.Window name="edit">
           <CreateCabinForm cabinToEdit={cabin} />
-        </Modal.Window>
-
-        <Modal.Window name='delete'>
+        </Modal.Window> */}
+{/* 
+        <Modal.Window name="delete">
           <ConfirmDelete
-            resource='cabin'
+            resource="cabin"
             onConfirm={() => deleteCabin(cabinId)}
             disabled={isDeleting}
           />
-        </Modal.Window>
-      </Modal>
+        </Modal.Window> */}
+      {/* </Modal> */}
 
       {/* <div>
         <ButtonWithConfirm
@@ -140,8 +141,20 @@ function CabinRow({ cabin }) {
 
         <Link to={`/cabins/${cabinId}`}>Details &rarr;</Link>
       </div> */}
-    </Table.Row>
+    </Row>
   );
 }
+
+CabinRow.propTypes = {
+  cabin: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    maxCapacity: PropTypes.number.isRequired,
+    regularPrice: PropTypes.number.isRequired,
+    discount: PropTypes.number,
+    image: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default CabinRow;
