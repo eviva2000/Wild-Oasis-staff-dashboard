@@ -20,12 +20,7 @@ A modern hotel management dashboard built with React and Supabase. This applicat
 - **Routing**: React Router DOM
 - **Icons**: React Icons
 
-## Prerequisites
 
-Before you begin, ensure you have the following installed:
-- Node.js (version 16 or higher)
-- npm or yarn package manager
-- A Supabase account and project
 
 ## Installation
 
@@ -85,67 +80,3 @@ Preview the production build:
 npm run preview
 ```
 
-## Project Structure
-
-```
-src/
-├── components/          # Reusable UI components
-├── data/               # Sample data and database utilities
-├── features/           # Feature-based modules
-│   ├── authentication/ # Login and user management
-│   ├── bookings/       # Booking management
-│   ├── cabins/         # Cabin management
-│   ├── check-in-out/   # Guest check-in/out processes
-│   ├── dashboard/      # Analytics and overview
-│   └── settings/       # Application settings
-├── hooks/              # Custom React hooks
-├── pages/              # Page components
-├── services/           # API services and Supabase client
-├── styles/             # Global styles
-├── ui/                 # Base UI components
-└── utils/              # Utility functions
-```
-
-## Key Features Explained
-
-### Dashboard
-- Real-time analytics showing recent bookings, sales, and check-ins
-- Visual charts displaying occupancy rates and revenue trends
-- Quick access to today's activities
-
-### Cabin Management
-- CRUD operations for hotel cabins
-- Image upload and management
-- Cabin availability tracking
-
-### Booking System
-- Comprehensive booking overview with filtering and sorting
-- Detailed booking information including guest details and payment status
-- Booking status management (confirmed, checked-in, checked-out)
-
-### Authentication
-- Secure user authentication via Supabase Auth
-- Role-based access control for hotel staff
-
-## Environment Variables
-
-| Variable | Description |
-|----------|-------------|
-| `VITE_SUPABASE_URL` | Your Supabase project URL |
-| `VITE_SUPABASE_ANON_KEY` | Your Supabase anonymous/public key |
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Support
-
-If you encounter any issues or have questions, please open an issue on GitHub or contact the development team.
