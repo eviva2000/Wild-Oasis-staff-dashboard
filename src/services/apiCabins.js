@@ -12,4 +12,6 @@ if(error){
     throw new Error('Cabin not found')
 }
 
+return data
+
 }
