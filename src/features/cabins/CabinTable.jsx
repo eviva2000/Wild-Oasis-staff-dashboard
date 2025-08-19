@@ -58,7 +58,7 @@ function CabinTable() {
     queryFn:getCabins
   })
 
-  console.log(cabins)
+  console.log('in the row',cabins)
 
 if (isPending)<Spinner/>
 

@@ -128,19 +128,14 @@ function CabinRow({ cabin }) {
         </Modal.Window> */}
       {/* </Modal> */}
 
-      {/* <div>
-        <ButtonWithConfirm
-          title='Delete cabin'
-          description='Are you sure you want to delete this cabin? This action can NOT be undone.'
-          confirmBtnLabel='Delete'
-          onConfirm={() => deleteCabin(cabinId)}
-          disabled={isDeleting}
+      <div>
+        <button
         >
           Delete
-        </ButtonWithConfirm>
+        </button>
 
-        <Link to={`/cabins/${cabinId}`}>Details &rarr;</Link>
-      </div> */}
+        {/* <Link to={`/cabins/${cabinId}`}>Details &rarr;</Link> */}
+      </div>
     </Row>
   );
 }
