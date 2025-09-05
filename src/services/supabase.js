@@ -7,6 +7,3 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export { supabaseUrl };
 export default supabase;
-
-console.log(import.meta.env.VITE_SUPABASE_URL);
-console.log(import.meta.env.VITE_SUPABASE_KEY);
