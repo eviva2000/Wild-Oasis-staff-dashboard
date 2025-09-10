@@ -138,7 +138,6 @@ function prepareData(startData, stays) {
       return arr;
     }, startData)
     .filter((obj) => obj.value > 0);
-
   return data;
 }
 
@@ -147,7 +146,6 @@ function DurationChart({ confirmedStays }) {
   // const startData = isDarkMode ? startDataDark : startDataLight;
    const startData = startDataLight;
   const data = prepareData(startData, confirmedStays);
-
   return (
     <ChartBox>
       <Heading as="h2">Stay duration summary</Heading>
