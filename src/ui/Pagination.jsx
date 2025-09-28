@@ -9,6 +9,12 @@ const StyledPagination = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: center;
+  }
 `;
 
 const P = styled.p`
@@ -18,11 +24,25 @@ const P = styled.p`
   & span {
     font-weight: 600;
   }
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    margin-left: 0;
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const Buttons = styled.div`
   display: flex;
   gap: 0.6rem;
+
+  @media (max-width: 480px) {
+    gap: 0.4rem;
+  }
 `;
 
 const PaginationButton = styled.button`
@@ -57,6 +77,30 @@ const PaginationButton = styled.button`
   &:hover:not(:disabled) {
     background-color: var(--color-brand-600);
     color: var(--color-brand-50);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+
+    & svg {
+      height: 1.6rem;
+      width: 1.6rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+    padding: 0.4rem 0.8rem;
+
+    & span {
+      display: none;
+    }
+
+    & svg {
+      height: 1.4rem;
+      width: 1.4rem;
+    }
   }
 `;
 

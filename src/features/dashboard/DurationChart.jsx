@@ -9,7 +9,8 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-// import { useDarkMode } from "../../context/DarkModeContext";
+import { useDarkMode } from "../../context/DarkModeContext";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 const ChartBox = styled.div`
   /* Box */
@@ -27,6 +28,83 @@ const ChartBox = styled.div`
   & .recharts-pie-label-text {
     font-weight: 600;
   }
+
+  @media (max-width: 1024px) {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.6rem 2rem;
+    
+    & > *:first-child {
+      margin-bottom: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.2rem 1.6rem;
+  }
+`;
+
+const MobileChartContainer = styled.div`
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+  }
+`;
+
+const MobileLegend = styled.div`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+`;
+
+const LegendItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.2rem;
+  
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+  }
+`;
+
+const LegendColor = styled.div`
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background-color: ${(props) => props.color};
+  flex-shrink: 0;
+  
+  @media (max-width: 480px) {
+    width: 1rem;
+    height: 1rem;
+  }
+`;
+
+const LegendText = styled.span`
+  color: var(--color-grey-600);
+  font-weight: 500;
+`;
+
+const LegendValue = styled.span`
+  color: var(--color-grey-700);
+  font-weight: 600;
+  margin-left: auto;
 `;
 
 const startDataLight = [
@@ -72,48 +150,48 @@ const startDataLight = [
   },
 ];
 
-// const startDataDark = [
-//   {
-//     duration: "1 night",
-//     value: 0,
-//     color: "#b91c1c",
-//   },
-//   {
-//     duration: "2 nights",
-//     value: 0,
-//     color: "#c2410c",
-//   },
-//   {
-//     duration: "3 nights",
-//     value: 0,
-//     color: "#a16207",
-//   },
-//   {
-//     duration: "4-5 nights",
-//     value: 0,
-//     color: "#4d7c0f",
-//   },
-//   {
-//     duration: "6-7 nights",
-//     value: 0,
-//     color: "#15803d",
-//   },
-//   {
-//     duration: "8-14 nights",
-//     value: 0,
-//     color: "#0f766e",
-//   },
-//   {
-//     duration: "15-21 nights",
-//     value: 0,
-//     color: "#1d4ed8",
-//   },
-//   {
-//     duration: "21+ nights",
-//     value: 0,
-//     color: "#7e22ce",
-//   },
-// ];
+const startDataDark = [
+  {
+    duration: "1 night",
+    value: 0,
+    color: "#b91c1c",
+  },
+  {
+    duration: "2 nights",
+    value: 0,
+    color: "#c2410c",
+  },
+  {
+    duration: "3 nights",
+    value: 0,
+    color: "#a16207",
+  },
+  {
+    duration: "4-5 nights",
+    value: 0,
+    color: "#4d7c0f",
+  },
+  {
+    duration: "6-7 nights",
+    value: 0,
+    color: "#15803d",
+  },
+  {
+    duration: "8-14 nights",
+    value: 0,
+    color: "#0f766e",
+  },
+  {
+    duration: "15-21 nights",
+    value: 0,
+    color: "#1d4ed8",
+  },
+  {
+    duration: "21+ nights",
+    value: 0,
+    color: "#7e22ce",
+  },
+];
 
 function prepareData(startData, stays) {
   // A bit ugly code, but sometimes this is what it takes when working with real data 😅
@@ -142,44 +220,105 @@ function prepareData(startData, stays) {
 }
 
 function DurationChart({ confirmedStays }) {
-  // const { isDarkMode } = useDarkMode();
-  // const startData = isDarkMode ? startDataDark : startDataLight;
-   const startData = startDataLight;
+  const { isDarkMode } = useDarkMode();
+  const { width } = useWindowSize();
+  const startData = isDarkMode ? startDataDark : startDataLight;
   const data = prepareData(startData, confirmedStays);
+
+  const isMobile = width <= 768;
+  const isSmallMobile = width <= 480;
+
+  // Custom tooltip for better mobile experience
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const data = payload[0];
+      return (
+        <div
+          style={{
+            backgroundColor: 'var(--color-grey-0)',
+            padding: isSmallMobile ? '0.6rem 1rem' : '0.8rem 1.2rem',
+            border: '1px solid var(--color-grey-200)',
+            borderRadius: 'var(--border-radius-sm)',
+            boxShadow: 'var(--shadow-md)',
+            fontSize: isSmallMobile ? '1.1rem' : '1.2rem',
+          }}
+        >
+          <p style={{ margin: 0, fontWeight: 600, color: 'var(--color-grey-700)' }}>
+            {data.name}: {data.value} stay{data.value !== 1 ? 's' : ''}
+          </p>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  CustomTooltip.propTypes = {
+    active: PropTypes.bool,
+    payload: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        value: PropTypes.number,
+      })
+    ),
+  };
+
+  // Responsive chart dimensions
+  const chartHeight = isSmallMobile ? 200 : isMobile ? 220 : 240;
+  const innerRadius = isSmallMobile ? 45 : isMobile ? 60 : 85;
+  const outerRadius = isSmallMobile ? 75 : isMobile ? 90 : 110;
+
   return (
     <ChartBox>
       <Heading as="h2">Stay duration summary</Heading>
-      <ResponsiveContainer width="100%" height={240}>
-        <PieChart>
-          <Pie
-            data={data}
-            nameKey="duration"
-            dataKey="value"
-            innerRadius={85}
-            outerRadius={110}
-            cx="40%"
-            cy="50%"
-            paddingAngle={3}
-          >
-            {data.map((entry) => (
-              <Cell
-                fill={entry.color}
-                stroke={entry.color}
-                key={entry.duration}
+      <MobileChartContainer>
+        <ResponsiveContainer width="100%" height={chartHeight}>
+          <PieChart>
+            <Pie
+              data={data}
+              nameKey="duration"
+              dataKey="value"
+              innerRadius={innerRadius}
+              outerRadius={outerRadius}
+              cx="50%"
+              cy="50%"
+              paddingAngle={isMobile ? 2 : 3}
+            >
+              {data.map((entry) => (
+                <Cell
+                  fill={entry.color}
+                  stroke={entry.color}
+                  key={entry.duration}
+                />
+              ))}
+            </Pie>
+            <Tooltip content={<CustomTooltip />} />
+            {/* Show default legend only on desktop */}
+            {!isMobile && (
+              <Legend
+                verticalAlign="middle"
+                align="right"
+                width="30%"
+                layout="vertical"
+                iconSize={15}
+                iconType="circle"
               />
+            )}
+          </PieChart>
+        </ResponsiveContainer>
+
+        {/* Custom mobile legend */}
+        {isMobile && (
+          <MobileLegend>
+            {data.map((entry) => (
+              <LegendItem key={entry.duration}>
+                <LegendColor color={entry.color} />
+                <LegendText>{entry.duration}</LegendText>
+                <LegendValue>{entry.value}</LegendValue>
+              </LegendItem>
             ))}
-          </Pie>
-          <Tooltip />
-          <Legend
-            verticalAlign="middle"
-            align="right"
-            width="30%"
-            layout="vertical"
-            iconSize={15}
-            iconType="circle"
-          />
-        </PieChart>
-      </ResponsiveContainer>
+          </MobileLegend>
+        )}
+      </MobileChartContainer>
     </ChartBox>
   );
 }

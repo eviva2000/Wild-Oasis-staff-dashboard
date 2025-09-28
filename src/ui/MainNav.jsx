@@ -12,6 +12,13 @@ const NavList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    gap: 0.4rem;
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+  }
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -50,6 +57,43 @@ const StyledNavLink = styled(NavLink)`
   &.active:link svg,
   &.active:visited svg {
     color: var(--color-brand-600);
+  }
+
+  @media (max-width: 768px) {
+    &:link,
+    &:visited {
+      flex-direction: column;
+      gap: 0.4rem;
+      padding: 0.8rem 1.2rem;
+      font-size: 1.2rem;
+      white-space: nowrap;
+      min-width: fit-content;
+    }
+
+    & svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    & span {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &:link,
+    &:visited {
+      padding: 0.6rem 1rem;
+    }
+
+    & svg {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+
+    & span {
+      font-size: 0.9rem;
+    }
   }
 `;
 

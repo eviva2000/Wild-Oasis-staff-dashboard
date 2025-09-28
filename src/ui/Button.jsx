@@ -55,6 +55,34 @@ const Button = styled.button`
 
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}
+
+  @media (max-width: 768px) {
+    font-size: ${(props) => {
+      if (props.size === "small") return "1.1rem";
+      if (props.size === "medium") return "1.3rem";
+      return "1.5rem";
+    }};
+    
+    padding: ${(props) => {
+      if (props.size === "small") return "0.3rem 0.6rem";
+      if (props.size === "medium") return "1rem 1.4rem";
+      return "1rem 2rem";
+    }};
+  }
+
+  @media (max-width: 480px) {
+    font-size: ${(props) => {
+      if (props.size === "small") return "1rem";
+      if (props.size === "medium") return "1.2rem";
+      return "1.4rem";
+    }};
+    
+    padding: ${(props) => {
+      if (props.size === "small") return "0.2rem 0.5rem";
+      if (props.size === "medium") return "0.8rem 1.2rem";
+      return "0.8rem 1.6rem";
+    }};
+  }
 `;
 
 Button.defaultProps = {
