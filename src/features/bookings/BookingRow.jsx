@@ -170,8 +170,7 @@ BookingRow.propTypes = {
     endDate: PropTypes.string.isRequired,
     numNights: PropTypes.number.isRequired,
     totalPrice: PropTypes.number.isRequired,
-    status: PropTypes.oneOf(["unconfirmed", "checked-in", "checked-out"])
-      .isRequired,
+    status: PropTypes.oneOf(["unconfirmed", "checked-in", "checked-out"]),
     guests: PropTypes.shape({
       fullName: PropTypes.string.isRequired,
       email: PropTypes.string.isRequired,

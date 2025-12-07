@@ -109,7 +109,7 @@ Window.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-Modal.Open = Open;
+// Modal.Open = Open;
 Modal.Window = Window;
 
 export default Modal;
