@@ -66,11 +66,10 @@ function CabinRow({ cabin }) {
 
   function handleDuplicate() {
     createCabin({
-      name: `Copy of ${name}`,
+      name: `Copy of ${name} (${Math.random().toString(36).slice(2, 6)})`,
       maxCapacity,
       regularPrice,
       discount,
-      image,
       description,
     });
   }

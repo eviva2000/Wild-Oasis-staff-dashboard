@@ -12,7 +12,7 @@ import {
   YAxis,
 } from "recharts";
 import { useDarkMode } from "../../context/DarkModeContext";
-import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
+import { eachDayOfInterval, format, isSameDay, subDays, addDays } from "date-fns";
 import { useWindowSize } from "../../hooks/useWindowSize";
 
 const StyledSalesChart = styled(DashboardBox)`
@@ -29,26 +29,31 @@ const StyledSalesChart = styled(DashboardBox)`
   }
 `;
 
-function SalesChart({ bookings, numDays }) {
+function SalesChart({ bookings, numDays, isUpcoming }) {
   const { isDarkMode } = useDarkMode();
   const { width } = useWindowSize();
 
   const isMobile = width <= 768;
   const isSmallMobile = width <= 480;
 
-  const allDates = eachDayOfInterval({
-    start: subDays(new Date(), numDays - 1),
-    end: new Date(),
-  });
+  const allDates = isUpcoming
+    ? eachDayOfInterval({
+        start: new Date(),
+        end: addDays(new Date(), numDays),
+      })
+    : eachDayOfInterval({
+        start: subDays(new Date(), numDays - 1),
+        end: new Date(),
+      });
 
   const data = allDates.map((date) => {
     return {
       label: format(date, "MMM dd"),
       totalSales: bookings
-        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+        .filter((booking) => isSameDay(date, new Date(booking.startDate)))
         .reduce((acc, cur) => acc + cur.totalPrice, 0),
       extrasSales: bookings
-        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+        .filter((booking) => isSameDay(date, new Date(booking.startDate)))
         .reduce((acc, cur) => acc + cur.extrasPrice, 0),
     };
   });
@@ -166,12 +171,13 @@ function SalesChart({ bookings, numDays }) {
 SalesChart.propTypes = {
   bookings: PropTypes.arrayOf(
     PropTypes.shape({
-      created_at: PropTypes.string.isRequired,
+      startDate: PropTypes.string.isRequired,
       totalPrice: PropTypes.number.isRequired,
       extrasPrice: PropTypes.number.isRequired,
     })
   ).isRequired,
   numDays: PropTypes.number.isRequired,
+  isUpcoming: PropTypes.bool,
 };
 
 export default SalesChart;

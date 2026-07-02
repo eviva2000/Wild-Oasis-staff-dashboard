@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const StyledTable = styled.div`
+  width: 100%;
   border: 1px solid var(--color-grey-200);
 
   font-size: 1.4rem;
@@ -96,10 +97,12 @@ const Empty = styled.p`
 
 const TableContext = createContext();
 
-function Table({ columns, children }) {
+function Table({ columns, children, className }) {
   return (
     <TableContext.Provider value={{ columns }}>
-      <StyledTable role="table">{children}</StyledTable>
+      <StyledTable role="table" className={className}>
+        {children}
+      </StyledTable>
     </TableContext.Provider>
   );
 }
@@ -130,6 +133,7 @@ function Body({ data, render }) {
 Table.propTypes = {
   columns: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
 };
 
 Header.propTypes = {
