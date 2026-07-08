@@ -4,6 +4,7 @@ const ButtonGroup = styled.div`
   display: flex;
   gap: 1.2rem;
   justify-content: flex-end;
+  margin-top: 2.4rem;
 `;
 
 export default ButtonGroup;

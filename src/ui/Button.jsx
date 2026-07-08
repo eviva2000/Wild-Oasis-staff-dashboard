@@ -10,7 +10,7 @@ const sizes = {
   `,
   medium: css`
     font-size: 1.4rem;
-    padding: 1.2rem 1.6rem;
+    padding: 1.2rem 2.4rem;
     font-weight: 500;
   `,
   large: css`
@@ -53,41 +53,40 @@ const Button = styled.button`
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
 
-  ${(props) => sizes[props.size]}
-  ${(props) => variations[props.variation]}
+  ${(props) => sizes[props.size || "medium"]}
+  ${(props) => variations[props.variation || "primary"]}
 
   @media (max-width: 768px) {
     font-size: ${(props) => {
-      if (props.size === "small") return "1.1rem";
-      if (props.size === "medium") return "1.3rem";
+      const size = props.size || "medium";
+      if (size === "small") return "1.1rem";
+      if (size === "medium") return "1.3rem";
       return "1.5rem";
     }};
     
     padding: ${(props) => {
-      if (props.size === "small") return "0.3rem 0.6rem";
-      if (props.size === "medium") return "1rem 1.4rem";
+      const size = props.size || "medium";
+      if (size === "small") return "0.3rem 0.6rem";
+      if (size === "medium") return "1rem 1.4rem";
       return "1rem 2rem";
     }};
   }
 
   @media (max-width: 480px) {
     font-size: ${(props) => {
-      if (props.size === "small") return "1rem";
-      if (props.size === "medium") return "1.2rem";
+      const size = props.size || "medium";
+      if (size === "small") return "1rem";
+      if (size === "medium") return "1.2rem";
       return "1.4rem";
     }};
     
     padding: ${(props) => {
-      if (props.size === "small") return "0.2rem 0.5rem";
-      if (props.size === "medium") return "0.8rem 1.2rem";
+      const size = props.size || "medium";
+      if (size === "small") return "0.2rem 0.5rem";
+      if (size === "medium") return "0.8rem 1.2rem";
       return "0.8rem 1.6rem";
     }};
   }
 `;
-
-Button.defaultProps = {
-  variation: "primary",
-  size: "medium",
-};
 
 export default Button;

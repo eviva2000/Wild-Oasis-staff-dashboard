@@ -131,43 +131,44 @@ function BookingCard({
 
   return (
     <Card>
-      <CardHeader>
-        <CabinName>{cabinName}</CabinName>
-        <Menus.Menu>
-          <Menus.Toggle id={bookingId} />
-          <Menus.List id={bookingId}>
-            <Menus.Button
-              icon={<HiEye />}
-              onClick={() => navigate(`/bookings/${bookingId}`)}
-            >
-              See details
-            </Menus.Button>
-
-            {status === "unconfirmed" && (
+      <Modal>
+        <CardHeader>
+          <CabinName>{cabinName}</CabinName>
+          <Menus.Menu>
+            <Menus.Toggle id={bookingId} />
+            <Menus.List id={bookingId}>
               <Menus.Button
-                icon={<HiArrowDownOnSquare />}
-                onClick={() => navigate(`/checkin/${bookingId}`)}
+                icon={<HiEye />}
+                onClick={() => navigate(`/bookings/${bookingId}`)}
               >
-                Check in
+                See details
               </Menus.Button>
-            )}
 
-            {status === "checked-in" && (
-              <Menus.Button
-                icon={<HiArrowUpOnSquare />}
-                onClick={() => checkout(bookingId)}
-                disabled={isCheckingOut}
-              >
-                Check out
-              </Menus.Button>
-            )}
+              {status === "unconfirmed" && (
+                <Menus.Button
+                  icon={<HiArrowDownOnSquare />}
+                  onClick={() => navigate(`/checkin/${bookingId}`)}
+                >
+                  Check in
+                </Menus.Button>
+              )}
 
-            <Modal.Open opens="delete">
-              <Menus.Button icon={<HiTrash />}>Delete booking</Menus.Button>
-            </Modal.Open>
-          </Menus.List>
-        </Menus.Menu>
-      </CardHeader>
+              {status === "checked-in" && (
+                <Menus.Button
+                  icon={<HiArrowUpOnSquare />}
+                  onClick={() => checkout(bookingId)}
+                  disabled={isCheckingOut}
+                >
+                  Check out
+                </Menus.Button>
+              )}
+
+              <Modal.Open opens="delete">
+                <Menus.Button icon={<HiTrash />}>Delete booking</Menus.Button>
+              </Modal.Open>
+            </Menus.List>
+          </Menus.Menu>
+        </CardHeader>
 
       <CardContent>
         <InfoRow>
@@ -231,7 +232,6 @@ function BookingCard({
         </ActionButtons>
       </CardContent>
 
-      <Modal>
         <Modal.Window name="delete">
           <ConfirmDelete
             resourceName="booking"

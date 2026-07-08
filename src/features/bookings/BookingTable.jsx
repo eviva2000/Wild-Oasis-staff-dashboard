@@ -43,8 +43,8 @@ function BookingTable() {
   if (!bookings.length) return <Empty resourceName="bookings" />;
 
   return (
-    <Menus>
-      <ResponsiveContainer>
+    <ResponsiveContainer>
+      <Menus>
         {/* Desktop Table View */}
         <div className="desktop-table">
           <ResponsiveTable columns="0.6fr 2fr 2.4fr 1.4fr 1fr 3.2rem">
@@ -69,7 +69,9 @@ function BookingTable() {
             </Table.Footer>
           </ResponsiveTable>
         </div>
+      </Menus>
 
+      <Menus>
         {/* Mobile Card View */}
         <div className="mobile-cards">
           <MobileCardContainer>
@@ -79,8 +81,8 @@ function BookingTable() {
           </MobileCardContainer>
           <Pagination count={count} />
         </div>
-      </ResponsiveContainer>
-    </Menus>
+      </Menus>
+    </ResponsiveContainer>
   );
 }
 
